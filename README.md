@@ -2,6 +2,8 @@
 
 [![Vote Tracker](https://github.com/Lusi-Mei/bilibili-vote-tracker/actions/workflows/tracker.yml/badge.svg)](https://github.com/Lusi-Mei/bilibili-vote-tracker/actions/workflows/tracker.yml)
 
+**实时仪表盘**: https://lusi-mei.github.io/bilibili-vote-tracker/
+
 Bilibili "奥特曼60周年光之创想季" 投票活动的实时数据采集与分析。
 
 ## 数据文件
@@ -11,7 +13,7 @@ Bilibili "奥特曼60周年光之创想季" 投票活动的实时数据采集与
 | `latest.json` | 最新一次抓取的完整数据 |
 | `history.json` | 时间序列票数（每 30 秒一个点，保留 48h） |
 | `vote_data.csv` | 最新排名 CSV 快照 |
-| `report.html` | 交互式 Chart.js 可视化报表 |
+| `index.html` | 实时仪表盘（GitHub Pages 托管，自动拉取原始数据渲染） |
 
 ## 运行方式
 
