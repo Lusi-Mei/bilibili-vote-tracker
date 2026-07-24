@@ -1,0 +1,30 @@
+name: Vote Tracker
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch votes
+        run: python3 vote_tracker.py --ci
+
+      - name: Commit data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add history.json latest.json vote_data.csv report.html
+          git diff --cached --quiet || git commit -m "[auto] $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push

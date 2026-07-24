@@ -1,0 +1,288 @@
+{
+  "timestamp": "2026-07-24T12:31:58.478501+08:00",
+  "vote_id": "23ERA1wloghvx0200",
+  "group_id": "24ERA1wloghvt0g00",
+  "remain_vote": 0,
+  "items": [
+    {
+      "rank": 1,
+      "item_id": "25ERA3wloghvzh900",
+      "title": "迪迦奥特曼",
+      "vote": 7063608,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/3s6KYlq9pB.png"
+    },
+    {
+      "rank": 2,
+      "item_id": "25ERA3wloghvx1600",
+      "title": "梦比优斯奥特曼",
+      "vote": 1240170,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/dnkQN04G1r.png"
+    },
+    {
+      "rank": 3,
+      "item_id": "25ERA3wloghvzrd00",
+      "title": "雷欧奥特曼",
+      "vote": 1024828,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/euQA4BJbh5.png"
+    },
+    {
+      "rank": 4,
+      "item_id": "25ERA3wloghvz2100",
+      "title": "捷德奥特曼",
+      "vote": 855909,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/9cO695pXE3.png"
+    },
+    {
+      "rank": 5,
+      "item_id": "25ERA3wloghvl9b00",
+      "title": "奈克赛斯奥特曼",
+      "vote": 773547,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/X6vPOxSV4c.png"
+    },
+    {
+      "rank": 6,
+      "item_id": "25ERA3wloghvl1000",
+      "title": "泽塔奥特曼",
+      "vote": 773547,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/zDKh7BTW4j.png"
+    },
+    {
+      "rank": 7,
+      "item_id": "25ERA3wloghvzrz00",
+      "title": "欧布奥特曼",
+      "vote": 773545,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/zmoHQzNNsj.png"
+    },
+    {
+      "rank": 8,
+      "item_id": "25ERA3wloghvz1g00",
+      "title": "布莱泽奥特曼",
+      "vote": 773538,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/lGU366J7zf.png"
+    },
+    {
+      "rank": 9,
+      "item_id": "25ERA3wloghvl2o00",
+      "title": "银河奥特曼",
+      "vote": 773538,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/EfuQQvFwzC.png"
+    },
+    {
+      "rank": 10,
+      "item_id": "25ERA3wloghvz8m00",
+      "title": "戴拿奥特曼",
+      "vote": 773536,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/APl15bbPwf.png"
+    },
+    {
+      "rank": 11,
+      "item_id": "25ERA3wloghvzwc00",
+      "title": "赛罗奥特曼",
+      "vote": 773524,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/zYsA8S9klq.png"
+    },
+    {
+      "rank": 12,
+      "item_id": "25ERA3wloghvzxc00",
+      "title": "盖亚奥特曼",
+      "vote": 773461,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/RNVVPphu6C.png"
+    },
+    {
+      "rank": 13,
+      "item_id": "25ERA3wloghvz4w00",
+      "title": "艾克斯奥特曼",
+      "vote": 750305,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/6MB3i9Ir7E.png"
+    },
+    {
+      "rank": 14,
+      "item_id": "25ERA3wloghvl6k00",
+      "title": "泰迦奥特曼",
+      "vote": 734242,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/KVYGO9X12v.png"
+    },
+    {
+      "rank": 15,
+      "item_id": "25ERA3wloghvzpw00",
+      "title": "希卡利奥特曼",
+      "vote": 519317,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/Tj0p6hRi0z.png"
+    },
+    {
+      "rank": 16,
+      "item_id": "25ERA3wloghvzd700",
+      "title": "提欧奥特曼",
+      "vote": 399518,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/xPjwUGWe03.png"
+    },
+    {
+      "rank": 17,
+      "item_id": "25ERA3wloghvz7700",
+      "title": "高斯奥特曼",
+      "vote": 155411,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/m5hreUCrFE.png"
+    },
+    {
+      "rank": 18,
+      "item_id": "25ERA3wloghvnjn00",
+      "title": "特利迦奥特曼",
+      "vote": 121239,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/8bptgj4woL.png"
+    },
+    {
+      "rank": 19,
+      "item_id": "25ERA3wloghvz7800",
+      "title": "阿古茹奥特曼",
+      "vote": 100336,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/YjzaWEE6yh.png"
+    },
+    {
+      "rank": 20,
+      "item_id": "25ERA3wloghvzwv00",
+      "title": "麦克斯奥特曼",
+      "vote": 68038,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/9FMlV0Pgbg.png"
+    },
+    {
+      "rank": 21,
+      "item_id": "25ERA3wloghvzmw00",
+      "title": "格丽乔奥特曼",
+      "vote": 48428,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/0C1L1p8TkP.png"
+    },
+    {
+      "rank": 22,
+      "item_id": "25ERA3wloghvl2p00",
+      "title": "奥特之王",
+      "vote": 40103,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/yNRsfmq0Sy.png"
+    },
+    {
+      "rank": 23,
+      "item_id": "25ERA3wloghvnj200",
+      "title": "爱迪奥特曼",
+      "vote": 37123,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/DUu1EhZfHv.png"
+    },
+    {
+      "rank": 24,
+      "item_id": "25ERA3wloghvzsl00",
+      "title": "阿斯特拉奥特曼",
+      "vote": 30821,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/niYA1BjcIs.png"
+    },
+    {
+      "rank": 25,
+      "item_id": "25ERA3wloghvxqr00",
+      "title": "斯科特奥特曼",
+      "vote": 20655,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/IE7hgWRKuV.png"
+    },
+    {
+      "rank": 26,
+      "item_id": "25ERA3wloghvxyw00",
+      "title": "维克特利奥特曼",
+      "vote": 20605,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/w9aPUs1ZHt.png"
+    },
+    {
+      "rank": 27,
+      "item_id": "25ERA3wloghvzwb00",
+      "title": "罗索奥特曼",
+      "vote": 15478,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/s0xgeY5YDt.png"
+    },
+    {
+      "rank": 28,
+      "item_id": "25ERA3wloghvxrh00",
+      "title": "亚刻奥特曼",
+      "vote": 14483,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/27cUQwP4WX.png"
+    },
+    {
+      "rank": 29,
+      "item_id": "25ERA3wloghvzme00",
+      "title": "奥美迦奥特曼",
+      "vote": 11182,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/wsefY2w7VZ.png"
+    },
+    {
+      "rank": 30,
+      "item_id": "25ERA3wloghvl7y00",
+      "title": "贝丝奥特曼",
+      "vote": 10386,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/Fmbovvbhth.png"
+    },
+    {
+      "rank": 31,
+      "item_id": "25ERA3wloghvnj100",
+      "title": "布鲁奥特曼",
+      "vote": 10252,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/citazxdV2A.png"
+    },
+    {
+      "rank": 32,
+      "item_id": "25ERA3wloghvzk100",
+      "title": "风马奥特曼",
+      "vote": 10198,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/lhdfH0LXoi.png"
+    },
+    {
+      "rank": 33,
+      "item_id": "25ERA3wloghvzk200",
+      "title": "德凯奥特曼",
+      "vote": 9858,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/FxYvvldx2R.png"
+    },
+    {
+      "rank": 34,
+      "item_id": "25ERA3wloghvnop00",
+      "title": "利布特奥特曼",
+      "vote": 9840,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/14ZpDJaI2Q.png"
+    },
+    {
+      "rank": 35,
+      "item_id": "25ERA3wloghvzsk00",
+      "title": "乔尼亚斯奥特曼",
+      "vote": 9838,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/spItNeZwhQ.png"
+    },
+    {
+      "rank": 36,
+      "item_id": "25ERA3wloghvnkp00",
+      "title": "雷古洛思奥特曼",
+      "vote": 9838,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/RaVSqKmzBr.png"
+    },
+    {
+      "rank": 37,
+      "item_id": "25ERA3wloghvnjm00",
+      "title": "葛雷特奥特曼",
+      "vote": 9838,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/RayAxueveP.png"
+    },
+    {
+      "rank": 38,
+      "item_id": "25ERA3wloghvl9j00",
+      "title": "纳伊斯奥特曼",
+      "vote": 9838,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/3lfu55Zb7s.png"
+    },
+    {
+      "rank": 39,
+      "item_id": "25ERA3wloghvzqo00",
+      "title": "哉阿斯奥特曼",
+      "vote": 9837,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/zx6Fhx9Y5g.png"
+    },
+    {
+      "rank": 40,
+      "item_id": "25ERA3wloghvzmq00",
+      "title": "尤莉安奥特曼",
+      "vote": 9837,
+      "pic": "//i0.hdslb.com/bfs/activity-plat/static/10498/11147/0d6d0d51ca1096d6cd05788de0bad4ad/3kq4Pp9IkQ.png"
+    }
+  ]
+}
