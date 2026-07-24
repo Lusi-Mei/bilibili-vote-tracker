@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奥特曼60周年光之创想季 — 投票排名</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+.header { text-align: center; padding: 25px 0 8px; background: linear-gradient(180deg, #1a1a3e, #0a0a1a); }
+.header h1 { font-size: 26px; color: #ff6b35; letter-spacing: 2px; }
+.header .sub { color: #888; margin-top: 6px; font-size: 13px; }
+.header .total { color: #ff6b35; font-weight: bold; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+/* Loading */
+.loading { text-align: center; padding: 60px; color: #888; font-size: 16px; }
+.loading .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #333; border-top-color: #ff6b35; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.error { text-align: center; padding: 60px; color: #ff4757; }
+
+/* Checkbox area */
+.filter-section { margin-bottom: 15px; }
+.filter-section h3 { color: #ccc; font-size: 14px; margin-bottom: 10px; padding-left: 10px; border-left: 3px solid #ff6b35; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+.filter-bar button { padding: 5px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; border: 1px solid #444; background: transparent; color: #aaa; }
+.filter-bar button:hover { border-color: #ff6b35; color: #ff6b35; }
+.filter-bar button.active { background: #ff6b35; color: #fff; border-color: #ff6b35; }
+.cb-grid { background: #111128; border-radius: 10px; padding: 12px 15px; border: 1px solid #1a1a3e; }
+.cb-row { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-bottom: 4px; }
+.cb-row:last-child { margin-bottom: 0; }
+.cb-label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; font-size: 12px; color: #999; padding: 3px 8px; border-radius: 4px; border: 1px solid transparent; transition: all 0.15s; user-select: none; white-space: nowrap; }
+.cb-label:hover { background: rgba(255,255,255,0.05); border-color: #333; }
+.cb-label input { display: none; }
+.cb-label .cb-dot { width: 8px; height: 8px; border-radius: 50%; opacity: 0.3; flex-shrink: 0; transition: opacity 0.15s; }
+.cb-label input:checked + .cb-dot { opacity: 1; box-shadow: 0 0 6px var(--c); }
+.cb-label input:checked ~ .cb-name { color: #ddd; }
+
+/* Chart */
+.chart-section { margin-bottom: 20px; }
+.chart-section h3 { color: #ccc; font-size: 14px; margin-bottom: 8px; padding-left: 10px; border-left: 3px solid #ff6b35; display: flex; align-items: center; gap: 10px; }
+.chart-section h3 .count { color: #888; font-size: 12px; font-weight: normal; }
+.chart-wrap { background: #111128; border-radius: 12px; padding: 20px; border: 1px solid #1a1a3e; position: relative; min-height: 450px; }
+.chart-wrap canvas { width: 100% !important; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; }
+th { padding: 10px; text-align: left; color: #aaa; font-weight: 500; font-size: 11px; border-bottom: 1px solid #333; }
+td { padding: 8px 10px; border-bottom: 1px solid #1a1a2e; font-size: 13px; }
+tr:hover { background: rgba(255,255,255,0.03); }
+.rank { width: 36px; text-align: center; font-weight: bold; font-size: 14px; }
+tr:nth-child(1) .rank { color: #ffd700; font-size: 18px; }
+tr:nth-child(2) .rank { color: #c0c0c0; font-size: 16px; }
+tr:nth-child(3) .rank { color: #cd7f32; font-size: 15px; }
+.title { font-weight: 500; }
+.votes { font-weight: bold; color: #ff6b35; min-width: 80px; }
+.pct { color: #888; font-size: 12px; min-width: 50px; }
+.bar-cell { min-width: 120px; }
+.bar { height: 5px; background: linear-gradient(90deg, #ff6b35, #ff9f43); border-radius: 3px; }
+
+.footer { text-align: center; padding: 20px; color: #555; font-size: 12px; margin-top: 20px; }
+.refresh { display: flex; justify-content: center; gap: 12px; margin: 15px 0; }
+.refresh button { background: #ff6b35; color: #fff; border: none; padding: 8px 24px; border-radius: 6px; cursor: font-size: 14px; }
+.refresh button:hover { background: #e85d2c; }
+.refresh .auto { font-size: 12px; color: #888; align-self: center; }
+.status { text-align: center; font-size: 12px; color: #666; margin: 8px 0; }
+.status.ok { color: #27ae60; }
+.status.err { color: #e74c3c; }
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>奥特曼60周年光之创想季</h1>
+    <p class="sub" id="headerSub">加载中...</p>
+</div>
+<div class="container">
+    <div id="loadingArea" class="loading"><div class="spinner"></div><div>正在从 GitHub 拉取数据...</div></div>
+    <div id="mainArea" style="display:none">
+
+        <!-- 选择区域 -->
+        <div class="filter-section">
+            <h3>选择要显示的角色（勾选后图表自动更新）</h3>
+            <div class="filter-bar" id="filterBar">
+                <button onclick="selectTop(3)">前三名</button>
+                <button onclick="selectTop(5)">前五名</button>
+                <button onclick="selectTop(10)">前十名</button>
+                <button onclick="selectTop(20)">前二十名</button>
+                <button onclick="selectTop(100)" class="active">全部</button>
+                <button onclick="clearAll()">清除</button>
+                <span style="margin-left: auto; font-size: 12px; color: #666;" id="selectedCount"></span>
+            </div>
+            <div class="cb-grid" id="checkboxGrid"></div>
+        </div>
+
+        <!-- 图表 -->
+        <div class="chart-section">
+            <h3>票数趋势 <span class="count">（横轴: 最近48小时，数据每5秒更新，GitHub 每1分钟推送）</span></h3>
+            <div class="chart-wrap"><canvas id="chartMain"></canvas></div>
+        </div>
+
+        <!-- 排行榜 -->
+        <div class="chart-section">
+            <h3>最新排名（全部角色）</h3>
+        </div>
+        <table>
+            <thead><tr><th>#</th><th>角色</th><th>票数</th><th>占比</th><th>对比第1名</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <div class="status" id="statusBar">就绪</div>
+        <div class="refresh">
+            <button onclick="fetchAll()">刷新数据</button>
+            <span class="auto" id="countdown">60s 后自动刷新</span>
+        </div>
+    </div>
+</div>
+<div class="footer" id="footerInfo"></div>
+
+<script>
+const RAW_BASE = "https://raw.githubusercontent.com/Lusi-Mei/bilibili-vote-tracker/master";
+const COLORS = [
+    "#ff6b35","#4ecdc4","#ffe66d","#a29bfe","#fd79a8",
+    "#00cec9","#fdcb6e","#6c5ce7","#e17055","#81ecec",
+    "#fab1a0","#55efc4","#74b9ff","#ff7675","#dfe6e9",
+    "#636e72","#ff9ff3","#54a0ff","#5f27cd","#01a3a4",
+    "#e056a0","#ffa502","#7bed9f","#70a1ff","#ff6348",
+    "#2ed573","#1e90ff","#ff4757","#2bcbba","#45aaf2",
+    "#a55eea","#26de81","#fc5c65","#4b7bec","#fd9644",
+    "#20bf6b","#8854d0","#eb3b5a","#0fb9b1","#3867d6",
+];
+
+let latestData = null;
+let historyData = null;
+let chart = null;
+let allDatasets = [];
+let totalItems = 0;
+
+async function fetchJSON(path) {
+    const url = RAW_BASE + "/" + path;
+    const resp = await fetch(url, { cache: "no-cache" });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    return resp.json();
+}
+
+function buildAll() {
+    const items = latestData.items;
+    totalItems = items.length;
+    const totalVotes = items.reduce((s, it) => s + it.vote, 0);
+    const maxVotes = items[0]?.vote || 1;
+    const ts = latestData.timestamp;
+
+    document.getElementById("headerSub").innerHTML =
+        `投票实时排名 · 总票数: <span class="total">${totalVotes.toLocaleString()}</span> · ${totalItems} 位角色 · 更新于 ${ts}`;
+    document.getElementById("footerInfo").textContent = `数据来源: Bilibili API · GitHub Actions 自动追踪 · ${ts}`;
+
+    buildTable(items, totalVotes, maxVotes);
+    buildChart(items);
+
+    document.getElementById("loadingArea").style.display = "none";
+    document.getElementById("mainArea").style.display = "block";
+    document.getElementById("statusBar").className = "status ok";
+    document.getElementById("statusBar").textContent = "数据加载成功 · " + new Date().toLocaleTimeString();
+}
+
+function buildTable(items, totalVotes, maxVotes) {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = items.map(it => {
+        const pct = it.vote / totalVotes * 100;
+        const barPct = it.vote / maxVotes * 100;
+        return `<tr>
+            <td class="rank">${it.rank}</td>
+            <td class="title">${it.title}</td>
+            <td class="votes">${it.vote.toLocaleString()}</td>
+            <td class="pct">${pct.toFixed(1)}%</td>
+            <td class="bar-cell"><div class="bar" style="width:${barPct.toFixed(1)}%"></div></td>
+        </tr>`;
+    }).join("");
+}
+
+function buildChart(items) {
+    allDatasets = items.map((it, i) => {
+        const iid = it.item_id;
+        const hItem = historyData.items?.[iid];
+        const votes = hItem?.votes || [];
+        const color = COLORS[i % COLORS.length];
+        return {
+            id: iid,
+            label: it.title,
+            rank: it.rank,
+            votesNow: it.vote,
+            data: votes,
+            borderColor: color,
+            backgroundColor: color + "44",
+            borderWidth: i < 3 ? 2.5 : 1.5,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            tension: 0.2,
+            hidden: false,
+        };
+    });
+
+    const timestamps = historyData.timestamps || [];
+
+    // Checkbox grid
+    const cg = document.getElementById("checkboxGrid");
+    const rowSize = 5;
+    let html = "";
+    for (let i = 0; i < allDatasets.length; i += rowSize) {
+        html += '<div class="cb-row">';
+        for (let j = i; j < Math.min(i + rowSize, allDatasets.length); j++) {
+            const ds = allDatasets[j];
+            html += `<label class="cb-label" style="--c:${ds.borderColor}">
+                <input type="checkbox" class="char-cb" data-id="${ds.id}" checked>
+                <span class="cb-dot" style="background:${ds.borderColor}"></span>
+                <span class="cb-name">${ds.rank}. ${ds.label}</span>
+            </label>`;
+        }
+        html += '</div>';
+    }
+    cg.innerHTML = html;
+
+    // Restore selection from localStorage
+    const saved = getSavedSelection();
+    const cbs = cg.querySelectorAll(".char-cb");
+    if (saved.length > 0) {
+        cbs.forEach(cb => { cb.checked = saved.includes(cb.dataset.id); });
+    }
+
+    // Apply hidden state
+    allDatasets.forEach(ds => {
+        const cb = cg.querySelector(`.char-cb[data-id="${ds.id}"]`);
+        ds.hidden = cb ? !cb.checked : true;
+    });
+
+    // Create chart
+    const ctx = document.getElementById("chartMain").getContext("2d");
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: timestamps,
+            datasets: getVisibleDatasets(),
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 400 },
+            interaction: { intersect: false, mode: "nearest" },
+            layout: { padding: { right: 20 } },
+            plugins: {
+                legend: {
+                    position: "top",
+                    labels: {
+                        color: "#aaa",
+                        usePointStyle: true,
+                        padding: 10,
+                        font: { size: 11 },
+                        filter: item => !item.hidden,
+                        generateLabels: function(chart) {
+                            return chart.data.datasets.map((ds, i) => ({
+                                text: ds.label,
+                                fillStyle: ds.borderColor,
+                                strokeStyle: ds.borderColor,
+                                lineWidth: ds.borderWidth,
+                                hidden: ds.hidden,
+                                index: i,
+                                pointStyle: "circle",
+                                fontColor: ds.hidden ? "#444" : "#aaa",
+                            }));
+                        },
+                    },
+                },
+                tooltip: {
+                    backgroundColor: "#1a1a3e",
+                    titleColor: "#fff",
+                    bodyColor: "#ddd",
+                    borderColor: "#333",
+                    borderWidth: 1,
+                    callbacks: {
+                        label: ctx => (ctx.dataset.label || "") + ": " + ctx.parsed.y.toLocaleString() + " 票",
+                    },
+                },
+            },
+            scales: {
+                x: { ticks: { color: "#666", maxTicksLimit: 15, font: { size: 10 } }, grid: { color: "#1a1a2e" } },
+                y: { ticks: { color: "#666", font: { size: 10 }, callback: v => v.toLocaleString() }, grid: { color: "#1a1a2e" } },
+            },
+        },
+    });
+
+    // Checkbox events
+    cbs.forEach(cb => {
+        cb.addEventListener("change", () => {
+            const ds = allDatasets.find(d => d.id === cb.dataset.id);
+            if (ds) {
+                ds.hidden = !cb.checked;
+                const ci = allDatasets.indexOf(ds);
+                if (chart.data.datasets[ci]) chart.data.datasets[ci].hidden = !cb.checked;
+            }
+            saveSelection();
+            updateCount();
+            fixCanvasSize();
+            chart.update();
+        });
+    });
+
+    updateCount();
+    fixCanvasSize();
+    document.querySelectorAll(".filter-bar button").forEach(b => b.classList.remove("active"));
+    document.querySelector(".filter-bar button:nth-child(5)").classList.add("active");
+}
+
+function getVisibleDatasets() {
+    return allDatasets.map((ds, i) => {
+        const cb = document.querySelector(`.char-cb[data-id="${ds.id}"]`);
+        const visible = cb ? cb.checked : false;
+        return { ...ds, hidden: !visible, borderWidth: visible ? (i < 3 ? 2.5 : 1.5) : 0 };
+    });
+}
+
+function fixCanvasSize() {
+    const wrap = document.querySelector(".chart-wrap");
+    const visible = allDatasets.filter(d => {
+        const cb = document.querySelector(`.char-cb[data-id="${d.id}"]`);
+        return cb && cb.checked;
+    }).length;
+    wrap.style.minHeight = Math.max(300, Math.min(visible * 50 + 250, 800)) + "px";
+    if (chart) chart.resize();
+}
+
+function getSavedSelection() {
+    try { return JSON.parse(localStorage.getItem("voteChartSelection") || "[]"); } catch (e) { return []; }
+}
+function saveSelection() {
+    const ids = Array.from(document.querySelectorAll(".char-cb")).filter(c => c.checked).map(c => c.dataset.id);
+    localStorage.setItem("voteChartSelection", JSON.stringify(ids));
+}
+function updateCount() {
+    const n = document.querySelectorAll(".char-cb:checked").length;
+    document.getElementById("selectedCount").textContent = "已选 " + n + " 项";
+}
+
+function selectTop(n) {
+    const cbs = document.querySelectorAll(".char-cb");
+    cbs.forEach((cb, i) => { cb.checked = i < n; });
+    allDatasets.forEach((ds, i) => { ds.hidden = i >= n; if (chart.data.datasets[i]) chart.data.datasets[i].hidden = i >= n; });
+    saveSelection();
+    updateCount();
+    fixCanvasSize();
+    chart.update();
+    document.querySelectorAll(".filter-bar button").forEach(b => b.classList.remove("active"));
+    const idx = n >= totalItems ? 4 : n > 20 ? 3 : n > 10 ? 2 : n > 5 ? 1 : 0;
+    document.querySelectorAll(".filter-bar button")[idx].classList.add("active");
+}
+
+function clearAll() {
+    const cbs = document.querySelectorAll(".char-cb");
+    cbs.forEach(cb => { cb.checked = false; });
+    allDatasets.forEach((ds, i) => { ds.hidden = true; if (chart.data.datasets[i]) chart.data.datasets[i].hidden = true; });
+    saveSelection();
+    updateCount();
+    fixCanvasSize();
+    chart.update();
+}
+
+async function fetchAll() {
+    const bar = document.getElementById("statusBar");
+    try {
+        bar.className = "status";
+        bar.textContent = "拉取中...";
+        const [latest, history] = await Promise.all([
+            fetchJSON("latest.json"),
+            fetchJSON("history.json"),
+        ]);
+        latestData = latest;
+        historyData = history;
+        buildAll();
+    } catch (e) {
+        bar.className = "status err";
+        bar.textContent = "拉取失败: " + e.message;
+    }
+}
+
+// Init
+fetchAll();
+
+// Auto refresh every 60s
+let sec = 60;
+setInterval(() => {
+    sec--;
+    document.getElementById("countdown").textContent = sec + "s 后自动刷新";
+    if (sec <= 0) { sec = 60; fetchAll(); }
+}, 1000);
+</script>
+</body>
+</html>
