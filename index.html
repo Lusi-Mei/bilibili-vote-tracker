@@ -95,13 +95,13 @@ tr:nth-child(3) .rank { color: #cd7f32; font-size: 15px; }
 
         <!-- 图表 -->
         <div class="chart-section">
-            <h3>票数趋势 <span class="count">（横轴: 最近48小时，数据每5秒更新，GitHub 每1分钟推送）</span></h3>
+            <h3>票数趋势 <span class="count">（横轴: 每小时一个数据点，持续累积）</span></h3>
             <div class="chart-wrap"><canvas id="chartMain"></canvas></div>
         </div>
 
         <!-- 增量图表 -->
         <div class="chart-section">
-            <h3>增票趋势（每次与上次的差值） <span class="count">（纵轴: 票数增量，波动越大说明投票越不规律）</span></h3>
+            <h3>增票趋势（每小时增量） <span class="count">（纵轴: 每小时票数增量，波动越大说明投票越不规律）</span></h3>
             <div class="chart-wrap"><canvas id="chartDelta"></canvas></div>
         </div>
 

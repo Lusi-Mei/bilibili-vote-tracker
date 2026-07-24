@@ -37,9 +37,9 @@ HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
 CSV_FILE = os.path.join(DATA_DIR, "vote_data.csv")
 REPORT_FILE = os.path.join(DATA_DIR, "report.html")
 POLL_INTERVAL = 5  # seconds
-HISTORY_INTERVAL = 6  # save history every N polls (6*5=30s)
+HISTORY_INTERVAL = int(os.environ.get("HISTORY_INTERVAL", "6"))  # save history every N polls (default 6 = 30s)
 MAX_ITEMS = 40  # top N characters
-MAX_HISTORY_POINTS = 5760  # 48h at 30s intervals
+MAX_HISTORY_POINTS = int(os.environ.get("MAX_HISTORY_POINTS", "5760"))  # default 48h at 30s
 
 TZ = timezone(timedelta(hours=8))  # CST
 
