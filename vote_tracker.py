@@ -16,6 +16,7 @@ import os
 import csv
 import signal
 import sys
+import subprocess
 from datetime import datetime, timezone, timedelta
 from urllib.request import Request, urlopen
 from urllib.error import URLError
@@ -594,8 +595,77 @@ def graceful_exit():
     sys.exit(0)
 
 
+def server_loop():
+    run_seconds = int(os.environ.get("SERVER_DURATION", "21000"))
+    push_interval = int(os.environ.get("PUSH_INTERVAL", "12"))
+    branch = os.environ.get("GIT_BRANCH", "master")
+
+    print(f"[server] duration={run_seconds}s, push_every={push_interval * POLL_INTERVAL}s, branch={branch}")
+
+    def git_push():
+        try:
+            subprocess.run(
+                ["git", "add", "history.json", "latest.json", "vote_data.csv", "report.html"],
+                cwd=DATA_DIR, capture_output=True, timeout=15,
+            )
+            r = subprocess.run(
+                ["git", "diff", "--cached", "--quiet"],
+                cwd=DATA_DIR, capture_output=True, timeout=10,
+            )
+            if r.returncode == 0:
+                return
+            subprocess.run(
+                ["git", "commit", "-m", f"[auto] {datetime.now(TZ).strftime('%Y-%m-%d %H:%M:%S')} CST"],
+                cwd=DATA_DIR, capture_output=True, timeout=15,
+            )
+            subprocess.run(
+                ["git", "push", "origin", branch],
+                cwd=DATA_DIR, capture_output=True, timeout=30,
+            )
+        except Exception as e:
+            print(f"  [git] push failed: {e}")
+
+    prev = load_previous()
+    fetch_count = 0
+    start = time.time()
+
+    while time.time() - start < run_seconds:
+        try:
+            now = datetime.now(TZ)
+            data = fetch_data()
+            save_snapshot(data, now)
+            fetch_count += 1
+
+            if fetch_count % HISTORY_INTERVAL == 0:
+                save_history(data, now)
+            if fetch_count % 6 == 0:
+                generate_report()
+            export_csv()
+
+            if fetch_count % push_interval == 0:
+                git_push()
+
+            prev = data
+            time.sleep(POLL_INTERVAL)
+
+        except KeyboardInterrupt:
+            break
+        except Exception as e:
+            ts = datetime.now(TZ).strftime("%H:%M:%S")
+            print(f"[{ts}] err: {e}, retry in {POLL_INTERVAL}s")
+            time.sleep(POLL_INTERVAL)
+
+    git_push()
+    export_csv()
+    generate_report()
+    elapsed = time.time() - start
+    print(f"[server] done. {fetch_count} fetches in {elapsed:.0f}s")
+
+
 if __name__ == "__main__":
-    if "--ci" in sys.argv:
+    if "--server" in sys.argv:
+        server_loop()
+    elif "--ci" in sys.argv:
         now = datetime.now(TZ)
         data = fetch_data()
         with open(LATEST_FILE, "w") as f:
