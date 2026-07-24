@@ -605,6 +605,10 @@ def server_loop():
     def git_push():
         try:
             subprocess.run(
+                ["git", "pull", "--rebase", "origin", branch],
+                cwd=DATA_DIR, capture_output=True, timeout=30,
+            )
+            subprocess.run(
                 ["git", "add", "history.json", "latest.json", "vote_data.csv", "report.html"],
                 cwd=DATA_DIR, capture_output=True, timeout=15,
             )
