@@ -385,39 +385,64 @@ function clearAll() {
 }
 
 function buildDeltaChart(items) {
-    const timestamps = historyData.timestamps || [];
+    const rawTimestamps = historyData.timestamps || [];
+
+    // Group deltas by hour
+    const hourMap = {};
+    const hourLabels = [];
+
+    for (let t = 1; t < rawTimestamps.length; t++) {
+        const ts = rawTimestamps[t];
+        const parts = ts.split(" ");
+        const date = parts[0];
+        const time = parts[1];
+        const hourKey = date + " " + time.split(":")[0] + ":00";
+
+        if (!hourMap[hourKey]) {
+            hourMap[hourKey] = { idx: hourLabels.length };
+            hourLabels.push(hourKey);
+        }
+    }
 
     const deltaDatasets = [];
     for (let i = 0; i < allDatasets.length; i++) {
         const ds = allDatasets[i];
         const votes = ds.data;
-        const deltas = [];
-        for (let j = 1; j < votes.length; j++) {
-            deltas.push(votes[j] - votes[j-1]);
+        const hourlyDeltas = new Array(hourLabels.length).fill(0);
+
+        for (let t = 1; t < Math.min(votes.length, rawTimestamps.length); t++) {
+            const ts = rawTimestamps[t];
+            const parts = ts.split(" ");
+            const date = parts[0];
+            const time = parts[1];
+            const hourKey = date + " " + time.split(":")[0] + ":00";
+            const hIdx = hourMap[hourKey]?.idx;
+            if (hIdx !== undefined) {
+                hourlyDeltas[hIdx] += votes[t] - votes[t-1];
+            }
         }
+
         deltaDatasets.push({
             id: ds.id,
             label: ds.label,
-            data: deltas,
+            data: hourlyDeltas,
             borderColor: ds.borderColor,
             backgroundColor: ds.backgroundColor,
             borderWidth: i < 3 ? 2.5 : 1.5,
-            pointRadius: 0,
-            pointHoverRadius: 4,
+            pointRadius: 2,
+            pointHoverRadius: 5,
             tension: 0.2,
             hidden: ds.hidden,
         });
     }
 
-    const deltaLabels = timestamps.slice(1);
-
     const ctx = document.getElementById("chartDelta").getContext("2d");
     if (deltaChart) deltaChart.destroy();
 
     deltaChart = new Chart(ctx, {
-        type: "line",
+        type: "bar",
         data: {
-            labels: deltaLabels,
+            labels: hourLabels,
             datasets: deltaDatasets,
         },
         options: {
@@ -456,12 +481,12 @@ function buildDeltaChart(items) {
                     borderColor: "#333",
                     borderWidth: 1,
                     callbacks: {
-                        label: ctx => (ctx.dataset.label || "") + ": +" + ctx.parsed.y.toLocaleString() + " 票",
+                        label: ctx => (ctx.dataset.label || "") + ": +" + ctx.parsed.y.toLocaleString() + " 票/小时",
                     },
                 },
             },
             scales: {
-                x: { ticks: { color: "#666", maxTicksLimit: 15, font: { size: 10 } }, grid: { color: "#1a1a2e" } },
+                x: { ticks: { color: "#666", maxTicksLimit: 12, font: { size: 10 } }, grid: { color: "#1a1a2e" } },
                 y: {
                     ticks: { color: "#666", font: { size: 10 }, callback: v => "+" + v.toLocaleString() },
                     grid: { color: "#1a1a2e" },

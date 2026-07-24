@@ -20,7 +20,4 @@ jobs:
           python-version: "3.11"
 
       - name: Run tracker (6h session)
-        env:
-          HISTORY_INTERVAL: "720"
-          MAX_HISTORY_POINTS: "336"
         run: python3 vote_tracker.py --server
